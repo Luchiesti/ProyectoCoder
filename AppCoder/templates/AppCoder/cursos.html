@@ -1,0 +1,8 @@
+{% extends 'AppCoder/inicio.html' %}
+
+{% block body %}
+    <h5>Los cursos disponibles son:</h5>
+    {% for key,value in cursos.items %}
+        <p>El curso <b>{{ key }}</b> tiene como nombre <b>{{ value }}</b></p>
+    {% endfor %}
+{% endblock %}
