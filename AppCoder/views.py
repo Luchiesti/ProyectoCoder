@@ -2,18 +2,27 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from AppCoder.models import Curso, Entregable, Estudiante, Profesor
 from django.template import loader
+from AppCoder.forms import CursoForm
 
 def inicio(request):
     return render(request, 'AppCoder/inicio.html')
 
 def cursos(request):
+
+    if request.method == 'POST':
+        my_form = CursoForm(request.POST)
+
+        if my_form.is_valid():
+            data = my_form.cleaned_data
+
+            curso_data = Curso(nombre=data.get('nombre'), camada=data.get('camada'))
+            curso_data.save()
+
+    cursos = Curso.objects.all()
     contexto = {
-        'cursos': {
-            'curso1': 'Nombre1',
-            'curso2': 'Nombre2',
-            'curso3': 'Nombre3',
-            'curso4': 'Nombre4',
-        }
+        'cursos':cursos,
+        'my_form': CursoForm(),
+
     }
     return render(request, 'AppCoder/cursos.html', contexto)
 

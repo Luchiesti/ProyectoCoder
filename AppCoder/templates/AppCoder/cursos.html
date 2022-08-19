@@ -1,8 +1,16 @@
 {% extends 'AppCoder/inicio.html' %}
 
+{% block title %}Cursos{% endblock %}
+
 {% block body %}
+    <form action="" method="POST">
+    {% csrf_token %}
+        {{ my_form.as_p }}
+        <input type="submit" value="Enviar">
+    </form>
+
     <h5>Los cursos disponibles son:</h5>
-    {% for key,value in cursos.items %}
-        <p>El curso <b>{{ key }}</b> tiene como nombre <b>{{ value }}</b></p>
+    {% for curso in cursos %}
+        <p>El curso es:<b>{{ curso.nombre }}</b>, la camada es: <b>{{ curso.camada }}</b></p>
     {% endfor %}
 {% endblock %}
