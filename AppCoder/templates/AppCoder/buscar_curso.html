@@ -1,16 +1,21 @@
 {% extends 'AppCoder/inicio.html' %}
 
-{% block title %}Cursos{% endblock %}
+{% block title %}Buscar curso{% endblock %}
 
 {% block body %}
     <form action="" method="POST">
         {% csrf_token %}
         {{ my_form.as_p }}
-        <input type="submit" value="Enviar">
+        <input type="submit" value="Buscar por camada">
     </form>
-
-    <h5>Los cursos disponibles son:</h5>
+{% if cursos %}
+    <h4>Los cursos son:</h4>
     {% for curso in cursos %}
         <p>El curso es:<b>{{ curso.nombre }}</b>, la camada es: <b>{{ curso.camada }}</b></p>
     {% endfor %}
+{% else %}
+    <h4>No hay cursos para el filtro seleccionado</h4>
+{% endif %}
+
+    
 {% endblock %}

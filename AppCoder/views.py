@@ -1,11 +1,28 @@
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from AppCoder.models import Curso, Entregable, Estudiante, Profesor
+from django.shortcuts import render
 from django.template import loader
-from AppCoder.forms import CursoForm
+
+from AppCoder.forms import CursoForm, BuscadorCurso
+from AppCoder.models import Curso
+
 
 def inicio(request):
     return render(request, 'AppCoder/inicio.html')
+
+
+def buscar_curso(request):
+    curso_buscar = []
+    if request.method == 'POST':
+        camada = request.POST.get('camada')
+        curso_buscar = Curso.objects.filter(camada__exact=camada)
+
+
+    contexto = {
+        'my_form': BuscadorCurso(),
+        'cursos': curso_buscar,
+    }
+    return render(request, 'AppCoder/buscar_curso.html', contexto)
+
 
 def cursos(request):
 
